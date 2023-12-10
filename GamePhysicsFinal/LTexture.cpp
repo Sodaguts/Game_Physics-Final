@@ -20,10 +20,14 @@ int LTexture::returnTestNum()
 	return Game::getInstance()->getNum();
 }
 
+int LTexture::returnData() 
+{
+	return Game::getInstance()->getData();
+}
+
 bool LTexture::loadFromFile(std::string path) 
 {
 	free();
-
 	SDL_Texture* newTexture = NULL;
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == NULL) 
@@ -36,7 +40,9 @@ bool LTexture::loadFromFile(std::string path)
 		//create texture from surface pixels
 		//TODO: CHANGE
 		//SDL_Renderer* gRenderer;
+		SDL_Renderer* gRend = Game::getInstance()->getRenderer();
 		//newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+		newTexture = SDL_CreateTextureFromSurface(gRend, loadedSurface);
 		if (newTexture == NULL)
 		{
 			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -80,4 +86,5 @@ void LTexture::render(int x, int y)
 	//Set rendering space and render to screen
 	SDL_Rect renderQuad = {x, y, mWidth, mHeight};
 	//SDL_RenderCopy(gRenderer, mTexture, NULL, &renderQuad);
+	SDL_RenderCopy(Game::getInstance()->getRenderer(), mTexture, NULL, &renderQuad);
 }

@@ -1,17 +1,16 @@
 #include "game.h"
 #include <iostream>
 
-//Game::Game(const int SCREEN_WIDTH, const int SCREEN_HEIGHT) 
-//{
-//	init(SCREEN_WIDTH, SCREEN_HEIGHT);
-//}
+Game* Game::game = nullptr;
+
 Game* Game::getInstance() 
 {
-	if (game == NULL) 
-	{
-		game = new Game();
-	}
 	return game;
+}
+
+void Game::createInstance() 
+{
+	game = new Game();
 }
 
 Game::~Game() 
@@ -62,13 +61,6 @@ bool Game::loadMedia()
 	//Loading success flag
 	bool success = true;
 
-	/*gImage = SDL_LoadBMP("Images/Image_47.bmp");
-	if (gImage == NULL)
-	{
-		printf("Unable to load image! SDL_ERROR: %s\n", "Images/Image_47.bmp", SDL_GetError());
-		success = false;
-	}*/
-
 	return success;
 }
 
@@ -79,5 +71,6 @@ void Game::close()
 	gWindow = NULL;
 
 	//Quit SDL
+	IMG_Quit();
 	SDL_Quit();
 }

@@ -27,15 +27,45 @@ std::string printCurrentVector(Vector2D vec);
 //	return gRenderer;
 //}
 
-Game* Game::game = NULL;
+bool loadMedia();
 
 LTexture t;
+const std::string textureFilepath = "assets/images/foo.png";
+LTexture background;
+const std::string backgroundFilepath = "assets/images/background.png";
+
+bool loadMedia() 
+{
+	bool success = true;
+
+	if (!t.loadFromFile(textureFilepath)) 
+	{
+		printf("Failed to load texture image!\n");
+		success = false;
+	}
+
+	if (!background.loadFromFile(backgroundFilepath)) 
+	{
+		printf("Failed to load texture background!\n");
+		success = false;
+	}
+
+	return success;
+}
+
+
 
 int main(int argc, char* args[])
 {
-	std::cout << t.returnTestNum();
-	Game* game = Game::getInstance();
-	if (!game->init(SCREEN_WIDTH,SCREEN_HEIGHT))
+	Game::createInstance();
+	Game* p_game = Game::getInstance();
+	/*p_game->setNum(1);
+	int num = p_game->getNum();
+	int num2 = t.returnTestNum();
+	std::cout << num << " " << &num << "\n";
+	std::cout << num2 << " " << &num2;*/
+	
+	if (!p_game->init(SCREEN_WIDTH,SCREEN_HEIGHT))
 	{
 		printf("Failed to initialize!\n");
 	}
@@ -43,7 +73,7 @@ int main(int argc, char* args[])
 	{
 		Vector2D testVector(1,1);
 		//load media
-		if (!game->loadMedia())
+		if (!loadMedia())
 		{
 			printf("Failed to load media!\n");
 		}
@@ -87,21 +117,29 @@ int main(int argc, char* args[])
 						}
 					}
 
-					//Clear Screen
-					SDL_SetRenderDrawColor(game->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-					SDL_RenderClear(game->getRenderer());
-
-					//Draw Red Quad
-					SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
-					SDL_SetRenderDrawColor(game->getRenderer(), 0xFF, 0x00, 0x00, 0xFF);
-					SDL_RenderFillRect(game->getRenderer(), &fillRect);
 				} 
-				SDL_RenderPresent(game->getRenderer());
+				//Clear Screen
+				SDL_SetRenderDrawColor(p_game->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(p_game->getRenderer());
+
+				//Draw Red Quad
+				SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
+				SDL_SetRenderDrawColor(p_game->getRenderer(), 0xFF, 0x00, 0x00, 0xFF);
+				SDL_RenderFillRect(p_game->getRenderer(), &fillRect);
+
+				//Render background
+				background.render(0, 0);
+				t.render(240, 190);
+				SDL_RenderPresent(p_game->getRenderer());
 			}
 		}
 	}
 
-	game->close();
+	t.free();
+	background.free();
+	p_game->close();
+	Game::deleteInstance();
+	p_game = nullptr;
 	return 0;
 }
 
