@@ -16,18 +16,10 @@ const int SCREEN_HEIGHT = 480;
 
 const std::string IMAGE_FILENAME = "Images/Image_47.bmp";
 
-//bool init();
-//bool loadMedia();
-//void close();
-
-SDL_Renderer* getRenderer();
-
 SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 //SDL_Surface* gImage = NULL;
 //extern SDL_Renderer* gRenderer = NULL;
-
-Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 std::string printCurrentVector(Vector2D vec);
 //SDL_Renderer* getRenderer() 
@@ -35,12 +27,15 @@ std::string printCurrentVector(Vector2D vec);
 //	return gRenderer;
 //}
 
+Game* Game::game = NULL;
 
-
+LTexture t;
 
 int main(int argc, char* args[])
 {
-	if (!game)
+	std::cout << t.returnTestNum();
+	Game* game = Game::getInstance();
+	if (!game->init(SCREEN_WIDTH,SCREEN_HEIGHT))
 	{
 		printf("Failed to initialize!\n");
 	}

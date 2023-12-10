@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <stdio.h>
+#include "game.h"
 class LTexture
 {
 	public:
@@ -27,6 +28,9 @@ class LTexture
 
 		int getWidth() { return mWidth; };
 		int getHeight() { return mHeight; };
+
+		int returnTestNum();
+
 	private:
 		SDL_Texture* mTexture;
 

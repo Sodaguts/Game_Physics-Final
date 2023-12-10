@@ -1,5 +1,6 @@
 #include "LTexture.h"
 
+
 LTexture::LTexture() 
 {
 	//initializes variables
@@ -12,6 +13,11 @@ LTexture::~LTexture()
 {
 	//deallocates memory
 	free();
+}
+
+int LTexture::returnTestNum() 
+{
+	return Game::getInstance()->getNum();
 }
 
 bool LTexture::loadFromFile(std::string path) 

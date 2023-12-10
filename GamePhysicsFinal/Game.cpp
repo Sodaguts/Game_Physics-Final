@@ -1,9 +1,17 @@
 #include "game.h"
 #include <iostream>
 
-Game::Game(const int SCREEN_WIDTH, const int SCREEN_HEIGHT) 
+//Game::Game(const int SCREEN_WIDTH, const int SCREEN_HEIGHT) 
+//{
+//	init(SCREEN_WIDTH, SCREEN_HEIGHT);
+//}
+Game* Game::getInstance() 
 {
-	init(SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (game == NULL) 
+	{
+		game = new Game();
+	}
+	return game;
 }
 
 Game::~Game() 
