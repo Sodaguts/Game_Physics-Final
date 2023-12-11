@@ -80,7 +80,8 @@ bool Game::setFont(std::string filename, float size)
 
 void Game::createParticle(Vector2D position) 
 {
-	Particle* p = new Particle(position);
+	Vector2D spawnPos = Vector2D(position.x - 16, position.y - 16);
+	Particle* p = new Particle(spawnPos);
 	particles.push_back(p);
 }
 

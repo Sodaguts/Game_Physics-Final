@@ -20,6 +20,9 @@
 const int SCREEN_WIDTH = 630;
 const int SCREEN_HEIGHT = 480;
 
+const int SCREEN_FPS = 60;
+const int TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
 const std::string IMAGE_FILENAME = "Images/Image_47.bmp";
 const std::string FONT_FILENAME = "assets/fonts/Alice-Regular.ttf"; //https://www.1001freefonts.com/alice.font
 
@@ -42,8 +45,11 @@ const Vector2D SCREEN_TOP_LEFT = Vector2D(1);
 
 Particle particle(&t);
 
-
-Timer fps;
+//FPS stuff
+Timer fpsTimer;
+Timer capTimer;
+int countedFrames = 0;
+std::stringstream timeText;
 
 bool loadMedia() 
 {
@@ -119,8 +125,10 @@ int main(int argc, char* args[])
 			bool quit = false;
 			SDL_Event e;
 			Mouse* mouse = new Mouse();
+			fpsTimer.start();
 			while (quit == false) 
 			{ 
+				capTimer.start();
 				while (SDL_PollEvent(&e)) 
 				{ 
 					//Process input
@@ -159,6 +167,20 @@ int main(int argc, char* args[])
 					particle.move();
 				} 
 
+				float avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
+				if (avgFPS > 2000000)
+				{
+					avgFPS = 0;
+				}
+
+				timeText.str("");
+				timeText << "FPS: " << avgFPS;
+				SDL_Color textColor = { 255, 255, 255 };
+				if (!textTexture.loadFromRenderedText(timeText.str().c_str(), textColor)) 
+				{
+					printf("Unable to render FPS texture!\n");
+				}
+
 				//Clear Screen
 				SDL_SetRenderDrawColor(p_game->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(p_game->getRenderer());
@@ -178,11 +200,17 @@ int main(int argc, char* args[])
 					p_game->particles[i]->render();
 				}
 				particle.render();
+				//textTexture.render(SCREEN_TOP_LEFT.x, SCREEN_TOP_LEFT.y);
 				textTexture.render(SCREEN_TOP_LEFT.x, SCREEN_TOP_LEFT.y);
 				SDL_RenderPresent(p_game->getRenderer());
-
+				++countedFrames;
 				
-
+				int frameTicks = capTimer.getTicks();
+				if (frameTicks < TICKS_PER_FRAME) 
+				{
+					//Wait remaining time if finished early
+					SDL_Delay(TICKS_PER_FRAME - frameTicks);
+				}
 				
 			}
 		}
