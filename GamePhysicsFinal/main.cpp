@@ -8,6 +8,8 @@
 #include "LTexture.h"
 #include "game.h"
 #include "Mouse.h"
+#include "Particle.h"
+
 
 
 
@@ -34,6 +36,8 @@ const std::string backgroundFilepath = "assets/images/background2.png";
 LTexture textTexture;
 const Vector2D SCREEN_MIDDLE = Vector2D((SCREEN_WIDTH - textTexture.getWidth()) / 2, (SCREEN_HEIGHT - textTexture.getHeight()) / 2);
 const Vector2D SCREEN_TOP_LEFT = Vector2D(1);
+
+Particle particle(&t);
 
 bool loadMedia() 
 {
@@ -74,7 +78,7 @@ bool loadMedia()
 	else 
 	{
 		SDL_Color textColor = {255, 255, 255};
-		if (!textTexture.loadFromRenderedText("Hello SDL", textColor))
+		if (!textTexture.loadFromRenderedText("Game Physics Final", textColor))
 		{
 			printf("Failed to render text texture!\n");
 			success = false;
@@ -144,9 +148,11 @@ int main(int argc, char* args[])
 							break;
 						}
 					}
+					particle.handleEvent(e);
 					mouse->handleEvent(&e);
-
+					particle.move();
 				} 
+				
 				//Clear Screen
 				SDL_SetRenderDrawColor(p_game->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(p_game->getRenderer());
@@ -160,8 +166,11 @@ int main(int argc, char* args[])
 				background.render(0, 0);
 				t.render(240, 190);
 				//(SCREEN_WIDTH - textTexture.getWidth()) / 2, (SCREEN_HEIGHT - textTexture.getHeight()) / 2
+				particle.render();
 				textTexture.render(SCREEN_TOP_LEFT.x, SCREEN_TOP_LEFT.y);
 				SDL_RenderPresent(p_game->getRenderer());
+
+				
 
 				
 			}

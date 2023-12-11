@@ -21,6 +21,8 @@ Game::~Game()
 bool Game::init(const int SCREEN_WIDTH, const int SCREEN_HEIGHT) 
 {
 	bool success = true;
+	SCREEN_W = SCREEN_WIDTH;
+	SCREEN_H = SCREEN_HEIGHT;
 
 	//initialize sdl
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)

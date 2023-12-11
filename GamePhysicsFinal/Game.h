@@ -29,12 +29,18 @@ public:
 	inline TTF_Font* getFont() { return gFont; };
 	bool setFont(std::string filename, float size);
 
+	int getScreenWidth() { return SCREEN_W; };
+	int getScreenHeight() { return SCREEN_H; };
+
 private:
 
 	static Game* game;
 
 	int testNum = 5;
 	int testData = 3;
+
+	int SCREEN_W = 0;
+	int SCREEN_H = 0;
 
 	SDL_Renderer* gRenderer = NULL;
 	SDL_Window* gWindow = NULL;
