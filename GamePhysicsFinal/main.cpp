@@ -15,8 +15,9 @@ const int SCREEN_WIDTH = 630;
 const int SCREEN_HEIGHT = 480;
 
 const std::string IMAGE_FILENAME = "Images/Image_47.bmp";
+const std::string FONT_FILENAME = "assets/fonts/Alice-Regular.ttf";
 
-SDL_Window* gWindow = NULL;
+//SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 //SDL_Surface* gImage = NULL;
 //extern SDL_Renderer* gRenderer = NULL;
@@ -33,6 +34,7 @@ LTexture t;
 const std::string textureFilepath = "assets/images/ball.png";
 LTexture background;
 const std::string backgroundFilepath = "assets/images/background2.png";
+LTexture textTexture;
 
 bool loadMedia() 
 {
@@ -49,6 +51,37 @@ bool loadMedia()
 		printf("Failed to load texture background!\n");
 		success = false;
 	}
+
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags)) 
+	{
+		printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+		success = false;
+	}
+	else 
+	{
+		gScreenSurface = SDL_GetWindowSurface(Game::getInstance()->getWindow());
+	}
+	//initialize ttf
+	if (TTF_Init() == -1) 
+	{
+		printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+		success = false;
+	}
+	if (!(Game::getInstance()->setFont(FONT_FILENAME, 28))) 
+	{
+		success = false;
+	}
+	else 
+	{
+		SDL_Color textColor = {0, 0, 0};
+		if (!textTexture.loadFromRenderedText("Hello SDL", textColor))
+		{
+			printf("Failed to render text texture!\n");
+			success = false;
+		}
+	}
+
 
 	return success;
 }
@@ -97,7 +130,7 @@ int main(int argc, char* args[])
 						case SDLK_UP:
 							printf("UP PRESSED ");
 							testVector.y = testVector.y + 1;
-							std::cout << printCurrentVector(testVector);
+							testVector.print();
 							break;
 						case SDLK_DOWN:
 							printf("DOWN PRESSED ");
@@ -130,11 +163,15 @@ int main(int argc, char* args[])
 				//Render background
 				background.render(0, 0);
 				t.render(240, 190);
+				textTexture.render((SCREEN_WIDTH - textTexture.getWidth()) / 2, (SCREEN_HEIGHT - textTexture.getHeight()) / 2);
 				SDL_RenderPresent(p_game->getRenderer());
+
+				
 			}
 		}
 	}
 
+	textTexture.free();
 	t.free();
 	background.free();
 	p_game->close();

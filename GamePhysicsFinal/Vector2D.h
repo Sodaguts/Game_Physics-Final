@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <iostream>
 
 struct Vector2D 
 {
@@ -43,29 +44,8 @@ struct Vector2D
 		return a - b;
 	}
 
-	float Magnitude() 
-	{
-		float xSquared = x * x;
-		float ySquared = y * y;
-		return std::abs(std::sqrt(x + y));
-	};
-
-	Vector2D Normalize() 
-	{
-		float magnitude = this->Magnitude();
-		if (magnitude == 0) 
-		{
-			return Vector2D();
-		}
-		else 
-		{
-			Vector2D normalizedVector;
-			normalizedVector.x = x / magnitude;
-			normalizedVector.y = y / magnitude;
-			return normalizedVector;
-		}
-		
-	}
+	float Magnitude();
+	Vector2D Normalize();
 
 	float SqrMagnitude() 
 	{
@@ -74,9 +54,12 @@ struct Vector2D
 
 	float Distance(const Vector2D other) 
 	{
-		float distance = std::sqrt(((other.x - x) * (other.x - x)) + ((other.y - y) * (other.y - y)));
-		return distance;
+		return std::sqrt(((other.x - x) * (other.x - x)) + ((other.y - y) * (other.y - y)));
 	}
 	
+	void print() 
+	{
+		std::cout << "(" << this->x << "," << this->y << ")\n";
+	}
 
 };

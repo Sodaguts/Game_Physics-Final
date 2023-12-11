@@ -67,7 +67,29 @@ bool LTexture::loadFromRenderedText(std::string textureText, SDL_Color textColor
 	free();
 
 	//SDL_Surface* textSurface = TTF_RenderText_Solid();
-	return false;
+	SDL_Surface* textSurface = TTF_RenderText_Solid(Game::getInstance()->getFont(), textureText.c_str(), textColor);
+	if (textSurface == NULL) 
+	{
+		printf("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+	}
+	else 
+	{
+		//Create texture from surface pixels
+		mTexture = SDL_CreateTextureFromSurface(Game::getInstance()->getRenderer(), textSurface);
+		if (mTexture == NULL) 
+		{
+			printf("Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError());
+		}
+		else 
+		{
+			//get image dimensions
+			mWidth = textSurface->w;
+			mHeight = textSurface->h;
+		}
+
+		SDL_FreeSurface(textSurface);
+	}
+	return mTexture != NULL;
 }
 
 void LTexture::free() 

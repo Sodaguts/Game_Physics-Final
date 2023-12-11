@@ -64,13 +64,30 @@ bool Game::loadMedia()
 	return success;
 }
 
+bool Game::setFont(std::string filename, float size) 
+{
+	bool success = true;
+	gFont = TTF_OpenFont(filename.c_str(), size);
+	if (gFont == NULL) 
+	{
+		printf("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
+		success = false;
+	}
+	return success;
+}
+
 void Game::close() 
 {
+	TTF_CloseFont(gFont);
+	gFont = NULL;
+
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
+	gRenderer = NULL;
 
 	//Quit SDL
+	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }

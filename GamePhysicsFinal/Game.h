@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <string>
 class Game
 {
 public:
@@ -25,6 +26,8 @@ public:
 
 	inline SDL_Renderer* getRenderer() { return gRenderer; };
 	inline SDL_Window* getWindow() { return gWindow; };
+	inline TTF_Font* getFont() { return gFont; };
+	bool setFont(std::string filename, float size);
 
 private:
 
@@ -35,6 +38,7 @@ private:
 
 	SDL_Renderer* gRenderer = NULL;
 	SDL_Window* gWindow = NULL;
+	TTF_Font* gFont = NULL;
 };
 
 
