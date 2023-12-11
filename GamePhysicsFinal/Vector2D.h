@@ -20,6 +20,11 @@ struct Vector2D
 		x = _x;
 		y = _y;
 	}
+	Vector2D(int _x, int _y) 
+	{
+		x = _x;
+		y = _y;
+	}
 
 	//Math Stuff
 	Vector2D operator+=(const Vector2D other) 

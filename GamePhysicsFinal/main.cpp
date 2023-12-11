@@ -24,6 +24,7 @@ SDL_Surface* gScreenSurface = NULL;
 //extern SDL_Renderer* gRenderer = NULL;
 
 
+
 bool loadMedia();
 
 LTexture t;
@@ -31,6 +32,8 @@ const std::string textureFilepath = "assets/images/ball.png";
 LTexture background;
 const std::string backgroundFilepath = "assets/images/background2.png";
 LTexture textTexture;
+const Vector2D SCREEN_MIDDLE = Vector2D((SCREEN_WIDTH - textTexture.getWidth()) / 2, (SCREEN_HEIGHT - textTexture.getHeight()) / 2);
+const Vector2D SCREEN_TOP_LEFT = Vector2D(1);
 
 bool loadMedia() 
 {
@@ -70,7 +73,7 @@ bool loadMedia()
 	}
 	else 
 	{
-		SDL_Color textColor = {0, 0, 0};
+		SDL_Color textColor = {255, 255, 255};
 		if (!textTexture.loadFromRenderedText("Hello SDL", textColor))
 		{
 			printf("Failed to render text texture!\n");
@@ -156,7 +159,8 @@ int main(int argc, char* args[])
 				//Render background
 				background.render(0, 0);
 				t.render(240, 190);
-				textTexture.render((SCREEN_WIDTH - textTexture.getWidth()) / 2, (SCREEN_HEIGHT - textTexture.getHeight()) / 2);
+				//(SCREEN_WIDTH - textTexture.getWidth()) / 2, (SCREEN_HEIGHT - textTexture.getHeight()) / 2
+				textTexture.render(SCREEN_TOP_LEFT.x, SCREEN_TOP_LEFT.y);
 				SDL_RenderPresent(p_game->getRenderer());
 
 				
