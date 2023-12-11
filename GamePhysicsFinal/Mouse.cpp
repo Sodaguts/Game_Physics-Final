@@ -27,5 +27,6 @@ void Mouse::handleEvent(SDL_Event* e)
 		SDL_GetMouseState(&x, &y);
 		Vector2D position = Vector2D(x,y);
 		position.print();
+		Game::getInstance()->createParticle(position);
 	}
 }

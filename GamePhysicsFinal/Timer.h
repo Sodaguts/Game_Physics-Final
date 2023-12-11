@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL.h>
+
+//Timer code based on tutorials by lazyFoo
 class Timer
 {
 public:

@@ -1,6 +1,6 @@
 #include "game.h"
 #include <iostream>
-
+#include "Particle.h"
 Game* Game::game = nullptr;
 
 Game* Game::getInstance() 
@@ -78,8 +78,21 @@ bool Game::setFont(std::string filename, float size)
 	return success;
 }
 
+void Game::createParticle(Vector2D position) 
+{
+	Particle* p = new Particle(position);
+	particles.push_back(p);
+}
+
 void Game::close() 
 {
+
+	for (auto i = 0; i < particles.size(); i++) 
+	{
+		delete particles[i];
+		particles[i] = nullptr;
+	}
+
 	TTF_CloseFont(gFont);
 	gFont = NULL;
 

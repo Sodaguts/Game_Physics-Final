@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include "Vector2D.h"
+#include "Game.h"
 
 class Mouse
 {

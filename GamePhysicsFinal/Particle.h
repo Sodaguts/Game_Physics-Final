@@ -1,12 +1,14 @@
 #pragma once
 #include "Vector2D.h"
 #include <SDL.h>
-#include "Game.h"
 #include "LTexture.h"
+
+
 class Particle
 {
 	public:
 		//functions and stuff
+		Particle(Vector2D position);
 		Particle(LTexture* texture);
 		~Particle();
 
@@ -15,6 +17,7 @@ class Particle
 		void move();
 
 		void render();
+		void attachTexture(LTexture* texture);
 
 		int getVelocity() { return particleVelocity; };
 		Vector2D getDimensions() { return Vector2D(PARTICLE_WIDTH, PARTICLE_HEIGHT); };
@@ -24,6 +27,7 @@ class Particle
 		int mVelX, mVelY;
 
 		int particleVelocity = 10;
+		int radius = 16;
 
 		LTexture* mTexture = NULL;
 		static const int PARTICLE_WIDTH = 32;

@@ -1,5 +1,14 @@
 #include "Particle.h"
 
+Particle::Particle(Vector2D position) 
+{
+	mPosX = position.x;
+	mPosY = position.y;
+
+	mVelX = 0;
+	mVelY = 0;
+}
+
 Particle::Particle(LTexture* texture) 
 {
 	//initialize variables
@@ -17,6 +26,11 @@ Particle::~Particle()
 {
 	delete mTexture;
 	mTexture = nullptr;
+}
+
+void Particle::attachTexture(LTexture* texture) 
+{
+	mTexture = texture;
 }
 
 void Particle::handleEvent(SDL_Event &e) 

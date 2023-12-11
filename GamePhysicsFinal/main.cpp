@@ -6,10 +6,12 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "LTexture.h"
-#include "game.h"
+#include "Game.h"
 #include "Mouse.h"
 #include "Particle.h"
 #include "Timer.h"
+#include <vector>
+#include <sstream>
 
 
 
@@ -39,6 +41,7 @@ const Vector2D SCREEN_MIDDLE = Vector2D((SCREEN_WIDTH - textTexture.getWidth()) 
 const Vector2D SCREEN_TOP_LEFT = Vector2D(1);
 
 Particle particle(&t);
+
 
 Timer fps;
 
@@ -169,6 +172,11 @@ int main(int argc, char* args[])
 				background.render(0, 0);
 				t.render(240, 190);
 				//(SCREEN_WIDTH - textTexture.getWidth()) / 2, (SCREEN_HEIGHT - textTexture.getHeight()) / 2
+				for (int i = 0; i < p_game->getInstance()->particles.size(); i++) 
+				{
+					p_game->particles[i]->attachTexture(&t);
+					p_game->particles[i]->render();
+				}
 				particle.render();
 				textTexture.render(SCREEN_TOP_LEFT.x, SCREEN_TOP_LEFT.y);
 				SDL_RenderPresent(p_game->getRenderer());
