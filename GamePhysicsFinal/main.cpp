@@ -30,9 +30,9 @@ std::string printCurrentVector(Vector2D vec);
 bool loadMedia();
 
 LTexture t;
-const std::string textureFilepath = "assets/images/foo.png";
+const std::string textureFilepath = "assets/images/ball.png";
 LTexture background;
-const std::string backgroundFilepath = "assets/images/background.png";
+const std::string backgroundFilepath = "assets/images/background2.png";
 
 bool loadMedia() 
 {
