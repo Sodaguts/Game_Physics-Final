@@ -15,18 +15,13 @@ const int SCREEN_WIDTH = 630;
 const int SCREEN_HEIGHT = 480;
 
 const std::string IMAGE_FILENAME = "Images/Image_47.bmp";
-const std::string FONT_FILENAME = "assets/fonts/Alice-Regular.ttf";
+const std::string FONT_FILENAME = "assets/fonts/Alice-Regular.ttf"; //https://www.1001freefonts.com/alice.font
 
 //SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 //SDL_Surface* gImage = NULL;
 //extern SDL_Renderer* gRenderer = NULL;
 
-std::string printCurrentVector(Vector2D vec);
-//SDL_Renderer* getRenderer() 
-//{
-//	return gRenderer;
-//}
 
 bool loadMedia();
 
@@ -92,11 +87,6 @@ int main(int argc, char* args[])
 {
 	Game::createInstance();
 	Game* p_game = Game::getInstance();
-	/*p_game->setNum(1);
-	int num = p_game->getNum();
-	int num2 = t.returnTestNum();
-	std::cout << num << " " << &num << "\n";
-	std::cout << num2 << " " << &num2;*/
 	
 	if (!p_game->init(SCREEN_WIDTH,SCREEN_HEIGHT))
 	{
@@ -135,17 +125,17 @@ int main(int argc, char* args[])
 						case SDLK_DOWN:
 							printf("DOWN PRESSED ");
 							testVector.y = testVector.y - 1;
-							std::cout << printCurrentVector(testVector);
+							testVector.print();
 							break;
 						case SDLK_RIGHT:
 							printf("RIGHT PRESSED ");
 							testVector.x = testVector.x + 1;
-							std::cout << printCurrentVector(testVector);
+							testVector.print();
 							break;
 						case SDLK_LEFT:
 							printf("LEFT PRESSED ");
 							testVector.x = testVector.x - 1;
-							std::cout << printCurrentVector(testVector);
+							testVector.print();
 							break;
 						}
 					}
@@ -180,8 +170,3 @@ int main(int argc, char* args[])
 	return 0;
 }
 
-std::string printCurrentVector(Vector2D vec) 
-{
-	std::string output = "(" + std::to_string(vec.x) + "," + std::to_string(vec.y) + ")\n";
-	return output;
-}
