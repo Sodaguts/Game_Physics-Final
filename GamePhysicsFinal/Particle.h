@@ -24,9 +24,9 @@ class Particle
 		int mVelX, mVelY;
 
 		int particleVelocity = 10;
-		static const int PARTICLE_WIDTH = 32;
-		static const int PARTICLE_HEIGHT = 32;
 
 		LTexture* mTexture = NULL;
+		static const int PARTICLE_WIDTH = 32;
+		static const int PARTICLE_HEIGHT = 32;
 };
 

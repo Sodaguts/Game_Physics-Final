@@ -64,12 +64,12 @@ void Particle::move()
 {
 	//move the particle left / right
 	mPosX += mVelX;
-	if ((mPosX < 0) || (mPosX + PARTICLE_WIDTH > Game::getInstance()->getScreenWidth())) 
+	if ((mPosX < 0) || ((mPosX + PARTICLE_WIDTH) > Game::getInstance()->getScreenWidth())) 
 	{
 		mPosX -= mVelX;
 	}
 	mPosY += mVelY;
-	if((mPosY < 0) || (mPosX + PARTICLE_HEIGHT > Game::getInstance()->getScreenHeight()))
+	if((mPosY < 0) || ((mPosX + PARTICLE_HEIGHT) > Game::getInstance()->getScreenHeight()))
 	{
 		mPosY -= mVelY;
 	}

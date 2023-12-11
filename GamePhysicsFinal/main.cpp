@@ -9,6 +9,7 @@
 #include "game.h"
 #include "Mouse.h"
 #include "Particle.h"
+#include "Timer.h"
 
 
 
@@ -38,6 +39,8 @@ const Vector2D SCREEN_MIDDLE = Vector2D((SCREEN_WIDTH - textTexture.getWidth()) 
 const Vector2D SCREEN_TOP_LEFT = Vector2D(1);
 
 Particle particle(&t);
+
+Timer fps;
 
 bool loadMedia() 
 {
@@ -152,7 +155,7 @@ int main(int argc, char* args[])
 					mouse->handleEvent(&e);
 					particle.move();
 				} 
-				
+
 				//Clear Screen
 				SDL_SetRenderDrawColor(p_game->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(p_game->getRenderer());
