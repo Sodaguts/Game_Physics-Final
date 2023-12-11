@@ -5,8 +5,8 @@ Particle::Particle(Vector2D position)
 	mPosX = position.x;
 	mPosY = position.y;
 
-	mVelX = 0 + (rand() % particleVelocity);;
-	mVelY = 0 + (rand() % particleVelocity);;
+	mVelX = 0.03;
+	mVelY = 0.03;
 }
 
 Particle::Particle(LTexture* texture) 
@@ -15,8 +15,8 @@ Particle::Particle(LTexture* texture)
 	mPosX = 0;
 	mPosY = 0;
 
-	mVelX = 0 + (rand() % particleVelocity);;
-	mVelY = 0 + (rand() % particleVelocity);;
+	mVelX = 0.03;
+	mVelY = 0.03;
 
 	mTexture = texture;
 	printf("created!");
@@ -35,50 +35,47 @@ void Particle::attachTexture(LTexture* texture)
 
 void Particle::handleEvent(SDL_Event &e) 
 {
-	//if (e.type == SDL_KEYDOWN && e.key.repeat == 0) 
-	//{
-	//	//Adjust the velocity
-	//	switch (e.key.keysym.sym) 
-	//	{
-	//		case SDLK_UP: 
-	//			mVelY -= particleVelocity;
-	//			break;
-	//		case SDLK_DOWN:
-	//			mVelY += particleVelocity;
-	//			break;
-	//		case SDLK_LEFT:
-	//			mVelX -= particleVelocity;
-	//			break;
-	//		case SDLK_RIGHT:
-	//			mVelX += particleVelocity;
-	//			break;
-	//	}
-	//}
-	//else if (e.type == SDL_KEYUP && e.key.repeat == 0) 
-	//{
-	//	switch (e.key.keysym.sym) 
-	//	{
-	//		case SDLK_UP:
-	//			mVelY += particleVelocity;
-	//			break;
-	//		case SDLK_DOWN:
-	//			mVelY -= particleVelocity;
-	//			break;
-	//		case SDLK_LEFT:
-	//			mVelX += particleVelocity;
-	//			break;
-	//		case SDLK_RIGHT:
-	//			mVelX -= particleVelocity;
-	//			break;
-	//	}
-	//}
+	
 }
 
-void Particle::move() 
+void Particle::move(float dt, SDL_Rect& wall) 
 {
-	//move the particle left / right
-	mPosX += mVelX;
-	mPosY += mVelY;
+	//initial velocity
+	mPosX += mVelX * dt;
+
+	if ((mPosX < 0) || (mPosX + radius > Game::getInstance()->SCREEN_W) || checkCollision(radius, wall)) 
+	{
+		mPosX -= mVelX;
+	}
+
+	mPosY += mVelY * dt;
+
+	if ((mPosY < 0) || (mPosX + radius > Game::getInstance()->SCREEN_H) || checkCollision(radius, wall)) 
+	{
+		mPosY -= mVelY;
+	}
+
+}
+
+void Particle::move(float dt) 
+{
+	mPosX += mVelX * dt;
+	mPosY += mVelY * dt;
+}
+
+bool Particle::checkCollision(float radius, SDL_Rect wall) 
+{
+	//sides of the rect
+	int left, right, top, bottom;
+	left = wall.x;
+	right = wall.x + wall.w;
+	top = wall.y;
+	bottom = wall.y + wall.h;
+
+	//current position of Particle+radius
+	Vector2D center = Vector2D(mPosX - 16, mPosY - 16);
+	Vector2D radiusPos = Vector2D(radius + center.x, radius + center.y);
+
 
 }
 

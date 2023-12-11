@@ -30,7 +30,7 @@ const std::string FONT_FILENAME = "assets/fonts/Alice-Regular.ttf"; //https://ww
 SDL_Surface* gScreenSurface = NULL;
 //SDL_Surface* gImage = NULL;
 //extern SDL_Renderer* gRenderer = NULL;
-
+float avgFPS = 0;
 
 
 bool loadMedia();
@@ -164,10 +164,14 @@ int main(int argc, char* args[])
 					}
 					particle.handleEvent(e);
 					mouse->handleEvent(&e);
-					particle.move();
+					particle.move(avgFPS);
+					for (auto i = 0; i < p_game->particles.size(); i++) 
+					{
+						p_game->particles[i]->move(avgFPS);
+					}
 				} 
 
-				float avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
+				avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
 				if (avgFPS > 2000000)
 				{
 					avgFPS = 0;
