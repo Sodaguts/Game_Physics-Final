@@ -7,6 +7,7 @@
 #include <SDL_ttf.h>
 #include "LTexture.h"
 #include "game.h"
+#include "Mouse.h"
 
 
 
@@ -104,6 +105,7 @@ int main(int argc, char* args[])
 		{
 			bool quit = false;
 			SDL_Event e;
+			Mouse* mouse = new Mouse();
 			while (quit == false) 
 			{ 
 				while (SDL_PollEvent(&e)) 
@@ -139,6 +141,7 @@ int main(int argc, char* args[])
 							break;
 						}
 					}
+					mouse->handleEvent(&e);
 
 				} 
 				//Clear Screen
